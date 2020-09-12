@@ -8,13 +8,17 @@ import (
 	"log"
     "net/http"
     "fmt"
+    "strings"
 )
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 
     if r.TLS != nil && len(r.TLS.VerifiedChains) > 0 && len(r.TLS.VerifiedChains[0]) > 0 {
         var commonName = r.TLS.VerifiedChains[0][0].Subject.CommonName
-        io.WriteString(w, fmt.Sprintf("Hello, %s!\n", commonName))
+        if strings.Contains(commonName, "Roger Rabit") {
+            io.WriteString(w, fmt.Sprintf("Hello, %s!\n", commonName))
+        }
+        w.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
     }
 
 	io.WriteString(w, "Hello, world!\n")
