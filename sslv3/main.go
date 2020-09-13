@@ -13,7 +13,7 @@ func main() {
         w.Write([]byte("This is an example server.\n"))
     })
     cfg := &tls.Config{
-        MinVersion:               tls.VersionTLS12,
+        MaxVersion:               tls.VersionSSL30,
         CurvePreferences:         []tls.CurveID{tls.CurveP521, tls.CurveP384, tls.CurveP256},
         PreferServerCipherSuites: true,
         CipherSuites: []uint16{
@@ -24,10 +24,10 @@ func main() {
         },
     }
     srv := &http.Server{
-        Addr:         ":443",
+        Addr:         ":8443",
         Handler:      mux,
         TLSConfig:    cfg,
         TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
     }
-    log.Fatal(srv.ListenAndServeTLS("tls.crt", "tls.key"))
+    log.Fatal(srv.ListenAndServeTLS("../certs/mtls.furikuri.net.crt", "../certs/mtls.furikuri.net.key"))
 }
