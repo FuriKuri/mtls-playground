@@ -41,7 +41,7 @@ func main() {
 	tlsConfig.BuildNameToCertificate()
 
 	server := &http.Server{
-		Addr:      ":8443",
+		Addr:      ":443",
 		TLSConfig: tlsConfig,
 	}
 
