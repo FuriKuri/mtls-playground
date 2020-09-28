@@ -24,7 +24,7 @@ func main() {
         },
     }
     srv := &http.Server{
-        Addr:         ":8443",
+        Addr:         ":443",
         Handler:      mux,
         TLSConfig:    cfg,
         TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
